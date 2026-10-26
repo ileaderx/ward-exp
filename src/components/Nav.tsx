@@ -17,7 +17,7 @@ const LINKS = [
 export function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="no-print fixed inset-y-0 start-0 hidden w-64 flex-col border-e border-black/5 bg-white/70 px-4 py-6 backdrop-blur md:flex dark:border-white/10 dark:bg-zinc-950/70">
+    <aside className="no-print hidden w-64 shrink-0 flex-col border-e border-black/5 bg-white px-4 py-6 md:flex dark:border-white/10 dark:bg-zinc-950">
       <div className="mb-8 flex items-center gap-3 px-2">
         <div className="size-9 overflow-hidden rounded-xl">
           <AppIconArt size={36} rounded />
@@ -57,7 +57,7 @@ export function Sidebar() {
 export function BottomTabs() {
   const pathname = usePathname();
   return (
-    <nav className="no-print pb-safe fixed inset-x-0 bottom-0 z-30 border-t border-black/5 bg-white/85 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-zinc-950/85">
+    <nav className="no-print pb-safe shrink-0 border-t border-black/5 bg-white md:hidden dark:border-white/10 dark:bg-zinc-950">
       <div className="grid grid-cols-4">
         {LINKS.map(({ href, label, icon: Icon }) => {
           const active = pathname.startsWith(href);

@@ -14,6 +14,8 @@
 :root {
   color-scheme: light dark;
   -webkit-tap-highlight-color: transparent;
+  /* No double-tap-to-zoom wait on taps */
+  touch-action: manipulation;
 }
 
 html,
@@ -89,6 +91,11 @@ input[type="date"] {
 @media print {
   .no-print {
     display: none !important;
+  }
+  .app-shell,
+  .app-scroll {
+    height: auto !important;
+    overflow: visible !important;
   }
   html,
   body {
