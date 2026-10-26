@@ -3,7 +3,7 @@ import { debtTotals, peopleSummary } from "@/lib/data";
 import { todayISO } from "@/lib/dates";
 import { DebtsClient } from "./DebtsClient";
 
-export const metadata: Metadata = { title: "Debts" };
+export const metadata: Metadata = { title: "الديون" };
 
 export default async function DebtsPage({ searchParams }: PageProps<"/debts">) {
   const { show } = await searchParams;

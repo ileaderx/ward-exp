@@ -28,7 +28,7 @@ export function Sheet({ open, onClose, title, children }: { open: boolean; onClo
         <div className="mx-auto mt-2.5 h-1.5 w-10 rounded-full bg-zinc-200 sm:hidden dark:bg-zinc-700" />
         <div className="flex items-center justify-between px-5 pt-3 pb-2 sm:pt-5">
           <h2 className="text-lg font-bold">{title}</h2>
-          <button onClick={onClose} className="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 dark:bg-zinc-800" aria-label="Close">
+          <button onClick={onClose} className="flex size-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-500 dark:bg-zinc-800" aria-label="إغلاق">
             <X className="size-5" />
           </button>
         </div>

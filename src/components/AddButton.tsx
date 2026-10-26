@@ -11,7 +11,7 @@ export function AddButton({ onClick, label }: { onClick: () => void; label: stri
       <button
         onClick={onClick}
         aria-label={label}
-        className="no-print fixed right-5 bottom-[calc(env(safe-area-inset-bottom)+80px)] z-40 flex size-14 items-center justify-center rounded-full bg-brand-600 text-white shadow-xl shadow-brand-600/40 transition active:scale-95 md:hidden"
+        className="no-print fixed end-5 bottom-[calc(env(safe-area-inset-bottom)+80px)] z-40 flex size-14 items-center justify-center rounded-full bg-brand-600 text-white shadow-xl shadow-brand-600/40 transition active:scale-95 md:hidden"
       >
         <Plus className="size-7" strokeWidth={2.5} />
       </button>

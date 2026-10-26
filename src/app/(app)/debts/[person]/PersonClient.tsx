@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
-import { ArrowDownLeft, ArrowUpRight, CalendarClock, CheckCircle2, ChevronLeft, HandCoins, Pencil, Plus, X } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, CalendarClock, CheckCircle2, ChevronRight, HandCoins, Pencil, Plus, X } from "lucide-react";
 import { deletePayment } from "@/lib/actions";
 import { formatDay } from "@/lib/dates";
 import { money, roundMoney } from "@/lib/format";
@@ -32,32 +32,32 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
   return (
     <div className="space-y-4 pt-4 pb-4 md:pt-8">
       <div className="no-print flex items-center justify-between">
-        <Link href="/debts" className="inline-flex items-center gap-1 rounded-full py-2 pr-3 text-sm font-semibold text-brand-600">
-          <ChevronLeft className="size-5" />
-          Debts
+        <Link href="/debts" className="inline-flex items-center gap-1 rounded-full py-2 pe-3 text-sm font-semibold text-brand-600">
+          <ChevronRight className="size-5" />
+          الديون
         </Link>
         <button onClick={() => setMode({ kind: "add" })} className="btn-ghost py-2">
           <Plus className="size-4" />
-          New debt
+          دين جديد
         </button>
       </div>
 
       <div className="card flex flex-col items-center p-6 text-center">
         <Avatar name={name} size="lg" />
-        <h1 className="mt-3 text-2xl font-bold tracking-tight">{name}</h1>
+        <h1 className="mt-3 text-2xl font-bold">{name}</h1>
         {net === 0 ? (
-          <p className="mt-1 text-sm font-medium text-zinc-500">All even — nothing open</p>
+          <p className="mt-1 text-sm font-medium text-zinc-500">متعادلين — لا يوجد شيء مفتوح</p>
         ) : (
           <>
-            <p className={clsx("tabular mt-2 text-4xl font-bold tracking-tight", net > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400")}>
+            <p className={clsx("tabular mt-2 text-4xl font-bold", net > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600 dark:text-amber-400")}>
               {money(Math.abs(net))}
             </p>
-            <p className="text-sm text-zinc-500">{net > 0 ? `${name} owes you` : `You owe ${name}`}</p>
+            <p className="text-sm text-zinc-500">{net > 0 ? `لك عند ${name}` : `عليك لـ ${name}`}</p>
           </>
         )}
         {owedToMe > 0 && iOwe > 0 && (
           <p className="mt-2 text-xs text-zinc-500">
-            Owes you {money(owedToMe)} · You owe {money(iOwe)}
+            لك عنده {money(owedToMe)} · عليك له {money(iOwe)}
           </p>
         )}
       </div>
@@ -81,7 +81,7 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <p className="font-semibold">{incoming ? "Lent to them" : "Borrowed from them"}</p>
+                      <p className="font-semibold">{incoming ? "أقرضته" : "استلفت منه"}</p>
                       <p className="truncate text-xs text-zinc-500">
                         {formatDay(d.date)}
                         {d.note && ` · ${d.note}`}
@@ -94,19 +94,19 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
                     <div className={clsx("h-full rounded-full", incoming ? "bg-emerald-500" : "bg-amber-500")} style={{ width: `${pct}%` }} />
                   </div>
                   <div className="mt-1.5 flex justify-between text-xs text-zinc-500">
-                    <span className="tabular">Paid {money(d.paid)}</span>
+                    <span className="tabular">المدفوع {money(d.paid)}</span>
                     {d.settled ? (
                       <span className="inline-flex items-center gap-1 font-semibold text-emerald-600">
-                        <CheckCircle2 className="size-3.5" /> Settled
+                        <CheckCircle2 className="size-3.5" /> مسدد
                       </span>
                     ) : (
-                      <span className="tabular font-semibold text-zinc-700 dark:text-zinc-300">Left {money(d.remaining)}</span>
+                      <span className="tabular font-semibold text-zinc-700 dark:text-zinc-300">المتبقي {money(d.remaining)}</span>
                     )}
                   </div>
                   {d.dueDate && !d.settled && (
                     <p className={clsx("mt-2 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium", overdue ? "bg-rose-100 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300" : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300")}>
                       <CalendarClock className="size-3.5" />
-                      {overdue ? "Overdue · " : "Due "}
+                      {overdue ? "متأخر · " : "موعد السداد "}
                       {formatDay(d.dueDate)}
                     </p>
                   )}
@@ -122,9 +122,9 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
                           </span>
                           <button
                             disabled={pending}
-                            onClick={() => confirm("Remove this payment?") && run(() => deletePayment(d.id, p.id))}
+                            onClick={() => confirm("حذف هذه الدفعة؟") && run(() => deletePayment(d.id, p.id))}
                             className="no-print rounded-full p-1 text-zinc-400 hover:text-rose-500"
-                            aria-label="Remove payment"
+                            aria-label="حذف الدفعة"
                           >
                             <X className="size-3.5" />
                           </button>
@@ -137,12 +137,12 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
                     {!d.settled && (
                       <button onClick={() => setMode({ kind: "pay", debt: d })} className="btn-primary flex-1 py-2.5">
                         <HandCoins className="size-4" />
-                        {incoming ? "Got paid" : "I paid"}
+                        {incoming ? "استلمت دفعة" : "دفعت له"}
                       </button>
                     )}
-                    <button onClick={() => setMode({ kind: "edit", debt: d })} className="btn-ghost py-2.5" aria-label="Edit debt">
+                    <button onClick={() => setMode({ kind: "edit", debt: d })} className="btn-ghost py-2.5" aria-label="تعديل الدين">
                       <Pencil className="size-4" />
-                      {d.settled && "Edit"}
+                      {d.settled && "تعديل"}
                     </button>
                   </div>
                 </div>
@@ -152,7 +152,7 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
         })}
       </div>
 
-      <Sheet open={mode !== null} onClose={close} title={mode?.kind === "pay" ? "Record payment" : mode?.kind === "edit" ? "Edit debt" : `New debt with ${name}`}>
+      <Sheet open={mode !== null} onClose={close} title={mode?.kind === "pay" ? "تسجيل دفعة" : mode?.kind === "edit" ? "تعديل الدين" : `دين جديد مع ${name}`}>
         {mode?.kind === "add" && <DebtForm today={today} people={people} defaultPerson={name} onDone={close} />}
         {mode?.kind === "edit" && (
           <DebtForm

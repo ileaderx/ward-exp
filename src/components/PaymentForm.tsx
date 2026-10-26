@@ -17,10 +17,10 @@ export function PaymentForm({ debt, today, onDone }: { debt: DebtItem; today: st
     <form ref={formRef} action={(fd) => run(() => addPayment(fd), onDone)} className="space-y-5">
       <input type="hidden" name="debtId" value={debt.id} />
       <p className="rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-        {incoming ? `${debt.person} paid you back` : `You paid ${debt.person}`}. Left to pay: <b className="tabular">{money(debt.remaining)}</b>
+        {incoming ? `${debt.person} رجّع لك` : `أنت دفعت لـ ${debt.person}`}. المتبقي: <b className="tabular">{money(debt.remaining)}</b>
       </p>
       <div>
-        <Label>Amount paid</Label>
+        <Label>المبلغ المدفوع</Label>
         <AmountInput autoFocus max={debt.remaining} />
         <button
           type="button"
@@ -30,22 +30,22 @@ export function PaymentForm({ debt, today, onDone }: { debt: DebtItem; today: st
           }}
           className="mt-2 text-sm font-semibold text-brand-600"
         >
-          Fill full amount ({money(debt.remaining)})
+          تعبئة المبلغ كاملاً ({money(debt.remaining)})
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <Label>Date</Label>
+          <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={today} className="field" />
         </label>
         <label className="block">
-          <Label hint="optional">Note</Label>
-          <input name="note" maxLength={200} placeholder="Cash, transfer…" className="field" />
+          <Label hint="اختياري">ملاحظة</Label>
+          <input name="note" maxLength={200} placeholder="كاش، تحويل…" className="field" />
         </label>
       </div>
       <button type="submit" disabled={pending} className="btn-primary w-full py-3.5 text-base">
         {pending && <Loader2 className="size-5 animate-spin" />}
-        Record payment
+        تسجيل الدفعة
       </button>
     </form>
   );

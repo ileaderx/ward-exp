@@ -3,7 +3,7 @@
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme {
-  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-arabic), "IBM Plex Sans Arabic", "Tajawal", ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --color-brand-50: #eef2ff;
   --color-brand-100: #e0e7ff;
   --color-brand-500: #6366f1;
@@ -45,6 +45,25 @@ textarea {
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* Arabic needs room for dots and diacritics */
+body {
+  line-height: 1.6;
+}
+h1,
+h2,
+h3 {
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
+/* Email, password and similar Latin-only fields */
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+  direction: ltr;
+  text-align: end;
 }
 
 @utility card {

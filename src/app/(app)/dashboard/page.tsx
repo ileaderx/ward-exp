@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import clsx from "clsx";
-import { ArrowDownLeft, ArrowUpRight, CalendarClock, ChevronRight, TrendingDown, TrendingUp } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, CalendarClock, ChevronLeft, TrendingDown, TrendingUp } from "lucide-react";
 import { debtTotals, expenseCategories, expenseStats, listExpenses, personNames, upcomingDebts } from "@/lib/data";
 import { TIME_ZONE, addDays, addMonths, formatDay, monthEnd, monthStart, relativeDayLabel, todayISO } from "@/lib/dates";
 import { money } from "@/lib/format";
@@ -10,11 +10,11 @@ import { CategoryBars, ColumnChart } from "@/components/Charts";
 import { ExpenseRow } from "@/components/ExpenseRow";
 import { QuickActions } from "./QuickActions";
 
-export const metadata: Metadata = { title: "Dashboard" };
+export const metadata: Metadata = { title: "الرئيسية" };
 
 function greeting() {
   const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: TIME_ZONE }).format(new Date()));
-  return hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  return hour < 12 ? "صباح الخير" : "مساء الخير";
 }
 
 export default async function DashboardPage() {
@@ -51,15 +51,18 @@ export default async function DashboardPage() {
       <PageHeader title={greeting()} subtitle={formatDay(today, { weekday: "long", day: "numeric", month: "long" })} />
 
       <div className="card overflow-hidden bg-gradient-to-br from-brand-600 via-brand-700 to-indigo-900 p-5 text-white ring-0 dark:from-brand-600 dark:via-brand-700 dark:to-indigo-950">
-        <p className="text-sm font-medium text-white/75">Spent this month</p>
-        <p className="tabular mt-1 text-[40px] leading-none font-bold tracking-tight">{money(month.total)}</p>
+        <p className="text-sm font-medium text-white/75">مصاريف هذا الشهر</p>
+        <p className="tabular mt-1 text-[40px] leading-none font-bold">{money(month.total)}</p>
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
-          <span className="rounded-full bg-white/15 px-2.5 py-1 font-medium">Today {money(todayTotal)}</span>
+          <span className="rounded-full bg-white/15 px-2.5 py-1 font-medium">اليوم {money(todayTotal)}</span>
           {change !== null && (
             <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 font-medium">
               {change > 0 ? <TrendingUp className="size-4" /> : <TrendingDown className="size-4" />}
-              {change > 0 ? "+" : ""}
-              {change}% vs last month
+              <span dir="ltr">
+                {change > 0 ? "+" : ""}
+                {change}%
+              </span>
+              عن الشهر الماضي
             </span>
           )}
         </div>
@@ -70,24 +73,24 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-2 gap-3">
         <Link href="/debts" className="card p-4 transition active:scale-[0.98]">
           <div className="flex items-center gap-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400">
-            <ArrowDownLeft className="size-4" /> Owed to me
+            <ArrowDownLeft className="size-4" /> لي عند الناس
           </div>
-          <p className="tabular mt-1.5 text-xl font-bold tracking-tight">{money(debts.owedToMe)}</p>
-          <p className="text-xs text-zinc-500">{debts.owedToMeCount} open</p>
+          <p className="tabular mt-1.5 text-xl font-bold">{money(debts.owedToMe)}</p>
+          <p className="text-xs text-zinc-500">{debts.owedToMeCount} مفتوح</p>
         </Link>
         <Link href="/debts" className="card p-4 transition active:scale-[0.98]">
           <div className="flex items-center gap-1.5 text-sm font-medium text-amber-600 dark:text-amber-400">
-            <ArrowUpRight className="size-4" /> I owe
+            <ArrowUpRight className="size-4" /> علي للناس
           </div>
-          <p className="tabular mt-1.5 text-xl font-bold tracking-tight">{money(debts.iOwe)}</p>
-          <p className="text-xs text-zinc-500">{debts.iOweCount} open</p>
+          <p className="tabular mt-1.5 text-xl font-bold">{money(debts.iOwe)}</p>
+          <p className="text-xs text-zinc-500">{debts.iOweCount} مفتوح</p>
         </Link>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="card p-5">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="font-semibold">Last 7 days</h2>
+            <h2 className="font-semibold">آخر 7 أيام</h2>
             <span className="tabular text-sm text-zinc-500">{money(week.total)}</span>
           </div>
           <ColumnChart data={weekData} highlight={today} />
@@ -95,15 +98,15 @@ export default async function DashboardPage() {
 
         <section className="card p-5">
           <div className="mb-4 flex items-baseline justify-between">
-            <h2 className="font-semibold">Top categories</h2>
+            <h2 className="font-semibold">أعلى الفئات</h2>
             <Link href="/reports" className="text-sm font-semibold text-brand-600">
-              Reports
+              التقارير
             </Link>
           </div>
           {month.byCategory.length ? (
             <CategoryBars data={month.byCategory} total={month.total} limit={5} />
           ) : (
-            <p className="py-8 text-center text-sm text-zinc-500">No spending this month yet.</p>
+            <p className="py-8 text-center text-sm text-zinc-500">لا توجد مصاريف هذا الشهر بعد.</p>
           )}
         </section>
       </div>
@@ -111,25 +114,25 @@ export default async function DashboardPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <section>
           <div className="mb-1.5 flex items-baseline justify-between px-1">
-            <h2 className="font-semibold">Recent expenses</h2>
+            <h2 className="font-semibold">آخر المصاريف</h2>
             <Link href="/expenses" className="inline-flex items-center text-sm font-semibold text-brand-600">
-              See all <ChevronRight className="size-4" />
+              عرض الكل <ChevronLeft className="size-4" />
             </Link>
           </div>
           <div className="card divide-y divide-black/5 overflow-hidden dark:divide-white/5">
             {recent.length ? (
               recent.map((e) => <ExpenseRow key={e.id} expense={e} sub={`${e.category} · ${relativeDayLabel(e.date, today)}`} />)
             ) : (
-              <p className="px-4 py-8 text-center text-sm text-zinc-500">Nothing yet — add your first expense above.</p>
+              <p className="px-4 py-8 text-center text-sm text-zinc-500">لا شيء بعد — أضف أول مصروف من الأعلى.</p>
             )}
           </div>
         </section>
 
         <section>
           <div className="mb-1.5 flex items-baseline justify-between px-1">
-            <h2 className="font-semibold">Due soon</h2>
+            <h2 className="font-semibold">مستحقة قريباً</h2>
             <Link href="/debts" className="inline-flex items-center text-sm font-semibold text-brand-600">
-              Debts <ChevronRight className="size-4" />
+              الديون <ChevronLeft className="size-4" />
             </Link>
           </div>
           <div className="card divide-y divide-black/5 overflow-hidden dark:divide-white/5">
@@ -144,8 +147,8 @@ export default async function DashboardPage() {
                     <span className="min-w-0 flex-1">
                       <span className="block truncate font-medium">{d.person}</span>
                       <span className={clsx("block text-xs", overdue ? "font-medium text-rose-600" : "text-zinc-500")}>
-                        {overdue ? "Overdue · " : "Due "}
-                        {formatDay(d.dueDate!)} · {d.direction === "owed_to_me" ? "owes you" : "you owe"}
+                        {overdue ? "متأخر · " : "موعد السداد "}
+                        {formatDay(d.dueDate!)} · {d.direction === "owed_to_me" ? "لك عنده" : "عليك له"}
                       </span>
                     </span>
                     <span className="tabular font-semibold">{money(d.remaining)}</span>
@@ -153,7 +156,7 @@ export default async function DashboardPage() {
                 );
               })
             ) : (
-              <p className="px-4 py-8 text-center text-sm text-zinc-500">No debts with a due date.</p>
+              <p className="px-4 py-8 text-center text-sm text-zinc-500">لا توجد ديون لها موعد سداد.</p>
             )}
           </div>
         </section>

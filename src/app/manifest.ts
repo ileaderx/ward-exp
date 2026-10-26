@@ -2,9 +2,11 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Ward Expenses",
-    short_name: "Expenses",
-    description: "Track daily expenses and debts, with simple reports.",
+    name: "مصاريفي",
+    short_name: "مصاريفي",
+    description: "تابع مصاريفك اليومية وديونك مع تقارير بسيطة.",
+    lang: "ar",
+    dir: "rtl",
     start_url: "/dashboard",
     scope: "/",
     display: "standalone",

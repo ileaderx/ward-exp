@@ -14,7 +14,7 @@ function csv(rows: (string | number | null)[][]) {
 }
 
 export async function GET(req: Request) {
-  if (!(await getSession())) return new Response("Unauthorized", { status: 401 });
+  if (!(await getSession())) return new Response("غير مصرح", { status: 401 });
 
   const url = new URL(req.url);
   const today = todayISO();
@@ -24,19 +24,19 @@ export async function GET(req: Request) {
   const [expenses, debts] = await Promise.all([listExpenses({ from, to }), listDebts({ status: "all" })]);
 
   const body = [
-    csv([["Expenses", `${from} to ${to}`], ["Date", "Category", "Note", "Amount"], ...expenses.map((e) => [e.date, e.category, e.note, e.amount])]),
+    csv([["المصاريف", `${from} إلى ${to}`], ["التاريخ", "الفئة", "ملاحظة", "المبلغ"], ...expenses.map((e) => [e.date, e.category, e.note, e.amount])]),
     csv([
-      ["Debts", "all"],
-      ["Date", "Person", "Type", "Amount", "Paid", "Remaining", "Due date", "Status", "Note"],
+      ["الديون", "الكل"],
+      ["التاريخ", "الشخص", "النوع", "المبلغ", "المدفوع", "المتبقي", "تاريخ السداد", "الحالة", "ملاحظة"],
       ...debts.map((d) => [
         d.date,
         d.person,
-        d.direction === "owed_to_me" ? "They owe me" : "I owe",
+        d.direction === "owed_to_me" ? "لي عنده" : "علي له",
         d.amount,
         d.paid,
         d.remaining,
         d.dueDate,
-        d.settled ? "Settled" : "Open",
+        d.settled ? "مسدد" : "مفتوح",
         d.note,
       ]),
     ]),

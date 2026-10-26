@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LoginForm } from "./LoginForm";
 import { AppIconArt } from "@/components/AppIcon";
 
-export const metadata: Metadata = { title: "Sign in" };
+export const metadata: Metadata = { title: "تسجيل الدخول" };
 
 export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const { next } = await searchParams;
@@ -13,8 +13,8 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           <div className="mb-4 size-16 overflow-hidden rounded-2xl shadow-lg shadow-brand-600/30">
             <AppIconArt size={64} rounded />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
-          <p className="mt-1 text-sm text-zinc-500">Sign in to track your expenses and debts</p>
+          <h1 className="text-2xl font-bold">أهلاً بعودتك</h1>
+          <p className="mt-1 text-sm text-zinc-500">سجّل دخولك لمتابعة مصاريفك وديونك</p>
         </div>
         <div className="card p-6">
           <LoginForm next={typeof next === "string" ? next : ""} />

@@ -1,16 +1,16 @@
 export const EXPENSE_CATEGORIES = [
-  { name: "Food", emoji: "🍔" },
-  { name: "Groceries", emoji: "🛒" },
-  { name: "Transport", emoji: "🚗" },
-  { name: "Fuel", emoji: "⛽" },
-  { name: "Bills", emoji: "💡" },
-  { name: "Rent", emoji: "🏠" },
-  { name: "Shopping", emoji: "🛍️" },
-  { name: "Health", emoji: "💊" },
-  { name: "Entertainment", emoji: "🎬" },
-  { name: "Education", emoji: "📚" },
-  { name: "Family", emoji: "👨‍👩‍👧" },
-  { name: "Other", emoji: "📦" },
+  { name: "طعام", emoji: "🍔" },
+  { name: "بقالة", emoji: "🛒" },
+  { name: "مواصلات", emoji: "🚗" },
+  { name: "بنزين", emoji: "⛽" },
+  { name: "فواتير", emoji: "💡" },
+  { name: "إيجار", emoji: "🏠" },
+  { name: "تسوق", emoji: "🛍️" },
+  { name: "صحة", emoji: "💊" },
+  { name: "ترفيه", emoji: "🎬" },
+  { name: "تعليم", emoji: "📚" },
+  { name: "عائلة", emoji: "👨‍👩‍👧" },
+  { name: "أخرى", emoji: "📦" },
 ] as const;
 
 export function categoryEmoji(name: string) {

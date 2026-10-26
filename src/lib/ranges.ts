@@ -1,11 +1,11 @@
 import { addDays, addMonths, isISODay, monthEnd, monthStart, todayISO } from "@/lib/dates";
 
 export const PRESETS = [
-  { id: "this-month", label: "This month" },
-  { id: "last-month", label: "Last month" },
-  { id: "30d", label: "Last 30 days" },
-  { id: "3m", label: "3 months" },
-  { id: "this-year", label: "This year" },
+  { id: "this-month", label: "هذا الشهر" },
+  { id: "last-month", label: "الشهر الماضي" },
+  { id: "30d", label: "آخر 30 يوم" },
+  { id: "3m", label: "3 أشهر" },
+  { id: "this-year", label: "هذه السنة" },
 ] as const;
 
 export type PresetId = (typeof PRESETS)[number]["id"] | "custom";

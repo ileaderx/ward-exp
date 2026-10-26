@@ -5,7 +5,7 @@ import { money, moneyCompact } from "@/lib/format";
 export function ColumnChart({ data, highlight }: { data: { label: string; sub?: string; value: number; key: string }[]; highlight?: string }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return (
-    <div className="flex h-40 items-end gap-[2px]" role="img" aria-label="Spending per period">
+    <div className="flex h-40 items-end gap-[2px]" role="img" aria-label="المصاريف حسب الفترة">
       {data.map((d) => {
         const h = d.value > 0 ? Math.max(4, (d.value / max) * 100) : 0;
         return (
@@ -43,8 +43,8 @@ export function CategoryBars({ data, total, limit }: { data: { category: string;
           <div className="mb-1 flex items-baseline justify-between gap-2 text-sm">
             <span className="min-w-0 truncate font-medium">
               {categoryEmoji(r.category)} {r.category}
-              <span className="ml-1.5 text-xs font-normal text-zinc-500">
-                {total > 0 ? Math.round((r.total / total) * 100) : 0}% · {r.count}×
+              <span className="ms-1.5 text-xs font-normal text-zinc-500">
+                <bdi dir="ltr">{total > 0 ? Math.round((r.total / total) * 100) : 0}%</bdi> · {r.count} مرة
               </span>
             </span>
             <span className="tabular shrink-0 font-semibold">{moneyCompact(r.total)}</span>

@@ -43,8 +43,8 @@ export function DebtForm({
       <div className="grid grid-cols-2 gap-2 rounded-2xl bg-zinc-100 p-1 dark:bg-zinc-800">
         {(
           [
-            { value: "owed_to_me", label: "They owe me", icon: ArrowDownLeft, on: "bg-emerald-500 text-white" },
-            { value: "i_owe", label: "I owe them", icon: ArrowUpRight, on: "bg-amber-500 text-white" },
+            { value: "owed_to_me", label: "لي عنده", icon: ArrowDownLeft, on: "bg-emerald-500 text-white" },
+            { value: "i_owe", label: "علي له", icon: ArrowUpRight, on: "bg-amber-500 text-white" },
           ] as const
         ).map((o) => (
           <button
@@ -63,7 +63,7 @@ export function DebtForm({
       </div>
 
       <label className="block">
-        <Label>Person name</Label>
+        <Label>اسم الشخص</Label>
         <input
           name="person"
           value={person}
@@ -73,7 +73,7 @@ export function DebtForm({
           maxLength={60}
           autoComplete="off"
           autoCapitalize="words"
-          placeholder="Write the person's name"
+          placeholder="اكتب اسم الشخص"
           className="field"
         />
         <datalist id={listId}>
@@ -93,24 +93,24 @@ export function DebtForm({
       </label>
 
       <div>
-        <Label>Amount</Label>
+        <Label>المبلغ</Label>
         <AmountInput defaultValue={debt?.amount} />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <Label>Date</Label>
+          <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={debt?.date ?? today} className="field" />
         </label>
         <label className="block">
-          <Label hint="optional">Due date</Label>
+          <Label hint="اختياري">تاريخ السداد</Label>
           <input name="dueDate" type="date" defaultValue={debt?.dueDate ?? ""} className="field" />
         </label>
       </div>
 
       <label className="block">
-        <Label hint="optional">Note</Label>
-        <input name="note" defaultValue={debt?.note} maxLength={200} placeholder="e.g. Car repair loan" className="field" />
+        <Label hint="اختياري">ملاحظة</Label>
+        <input name="note" defaultValue={debt?.note} maxLength={200} placeholder="مثلاً: سلفة لتصليح السيارة" className="field" />
       </label>
 
       <div className="flex gap-3 pt-1">
@@ -118,16 +118,16 @@ export function DebtForm({
           <button
             type="button"
             disabled={pending}
-            onClick={() => confirm("Delete this debt and its payments?") && run(() => deleteDebt(debt.id), onDeleted ?? (() => onDone(person)))}
+            onClick={() => confirm("حذف هذا الدين وكل دفعاته؟") && run(() => deleteDebt(debt.id), onDeleted ?? (() => onDone(person)))}
             className="btn bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400"
-            aria-label="Delete debt"
+            aria-label="حذف الدين"
           >
             <Trash2 className="size-5" />
           </button>
         )}
         <button type="submit" disabled={pending} className="btn-primary flex-1 py-3.5 text-base">
           {pending && <Loader2 className="size-5 animate-spin" />}
-          {debt ? "Save changes" : "Add debt"}
+          {debt ? "حفظ التعديلات" : "إضافة الدين"}
         </button>
       </div>
     </form>

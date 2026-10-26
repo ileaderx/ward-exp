@@ -11,7 +11,7 @@ import { CategoryBars, ColumnChart } from "@/components/Charts";
 import { ExpenseRow } from "@/components/ExpenseRow";
 import { PrintButton } from "./PrintButton";
 
-export const metadata: Metadata = { title: "Reports" };
+export const metadata: Metadata = { title: "التقارير" };
 
 export default async function ReportsPage({ searchParams }: PageProps<"/reports">) {
   const range = resolveRange(await searchParams);
@@ -40,13 +40,13 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
   return (
     <div className="space-y-4 pb-4">
       <PageHeader
-        title="Reports"
+        title="التقارير"
         subtitle={`${formatDay(from)} – ${formatDay(to)}`}
         action={
           <>
-            <a href={`/api/export?from=${from}&to=${to}`} className="btn-ghost px-3 py-2.5" aria-label="Download CSV">
+            <a href={`/api/export?from=${from}&to=${to}`} className="btn-ghost px-3 py-2.5" aria-label="تنزيل ملف Excel">
               <Download className="size-4" />
-              <span className="hidden sm:inline">CSV</span>
+              <span className="hidden sm:inline">Excel</span>
             </a>
             <PrintButton />
           </>
@@ -71,74 +71,74 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
 
       <form action="/reports" className="no-print card flex flex-wrap items-end gap-3 p-4">
         <label className="min-w-[8rem] flex-1">
-          <span className="mb-1 block text-xs font-medium text-zinc-500">From</span>
+          <span className="mb-1 block text-xs font-medium text-zinc-500">من</span>
           <input type="date" name="from" defaultValue={from} required className="field py-2.5" />
         </label>
         <label className="min-w-[8rem] flex-1">
-          <span className="mb-1 block text-xs font-medium text-zinc-500">To</span>
+          <span className="mb-1 block text-xs font-medium text-zinc-500">إلى</span>
           <input type="date" name="to" defaultValue={to} required className="field py-2.5" />
         </label>
-        <button className="btn-primary w-full py-2.5 sm:w-auto">Show</button>
+        <button className="btn-primary w-full py-2.5 sm:w-auto">عرض</button>
       </form>
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label="Total spent" value={money(stats.total)} tone="text-rose-600 dark:text-rose-400" />
-        <Stat label="Avg per day" value={money(avgPerDay)} />
-        <Stat label="Expenses" value={String(stats.count)} />
-        <Stat label="Top category" value={stats.byCategory[0]?.category ?? "—"} />
+        <Stat label="مجموع المصاريف" value={money(stats.total)} tone="text-rose-600 dark:text-rose-400" />
+        <Stat label="المعدل اليومي" value={money(avgPerDay)} />
+        <Stat label="عدد المصاريف" value={String(stats.count)} />
+        <Stat label="أعلى فئة" value={stats.byCategory[0]?.category ?? "—"} />
       </div>
 
       <section className="card p-5">
         <div className="mb-4 flex items-baseline justify-between">
-          <h2 className="font-semibold">{byMonth ? "Spending per month" : "Spending per day"}</h2>
-          <span className="text-sm text-zinc-500">{span} days</span>
+          <h2 className="font-semibold">{byMonth ? "المصاريف حسب الشهر" : "المصاريف حسب اليوم"}</h2>
+          <span className="text-sm text-zinc-500">{span} يوم</span>
         </div>
-        {stats.count ? <ColumnChart data={trend} /> : <p className="py-8 text-center text-sm text-zinc-500">No expenses in this period.</p>}
+        {stats.count ? <ColumnChart data={trend} /> : <p className="py-8 text-center text-sm text-zinc-500">لا توجد مصاريف في هذه الفترة.</p>}
       </section>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <section className="card p-5">
-          <h2 className="mb-4 font-semibold">By category</h2>
-          {stats.byCategory.length ? <CategoryBars data={stats.byCategory} total={stats.total} /> : <p className="py-6 text-center text-sm text-zinc-500">Nothing to show.</p>}
+          <h2 className="mb-4 font-semibold">حسب الفئة</h2>
+          {stats.byCategory.length ? <CategoryBars data={stats.byCategory} total={stats.total} /> : <p className="py-6 text-center text-sm text-zinc-500">لا يوجد شيء لعرضه.</p>}
         </section>
 
         <section>
-          <h2 className="mb-1.5 px-1 font-semibold">Biggest expenses</h2>
+          <h2 className="mb-1.5 px-1 font-semibold">أكبر المصاريف</h2>
           <div className="card divide-y divide-black/5 overflow-hidden dark:divide-white/5">
             {biggest.length ? (
               biggest.map((e) => <ExpenseRow key={e.id} expense={e} sub={`${e.category} · ${formatDay(e.date)}`} />)
             ) : (
-              <p className="px-4 py-8 text-center text-sm text-zinc-500">Nothing to show.</p>
+              <p className="px-4 py-8 text-center text-sm text-zinc-500">لا يوجد شيء لعرضه.</p>
             )}
           </div>
         </section>
       </div>
 
       <section className="card p-5">
-        <h2 className="mb-4 font-semibold">Debts in this period</h2>
+        <h2 className="mb-4 font-semibold">الديون في هذه الفترة</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <MiniStat label="I lent" value={activity.lent} />
-          <MiniStat label="I got back" value={activity.received} />
-          <MiniStat label="I borrowed" value={activity.borrowed} />
-          <MiniStat label="I paid back" value={activity.repaid} />
+          <MiniStat label="أقرضت" value={activity.lent} />
+          <MiniStat label="استرجعت" value={activity.received} />
+          <MiniStat label="استلفت" value={activity.borrowed} />
+          <MiniStat label="سددت" value={activity.repaid} />
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3 border-t border-black/5 pt-4 dark:border-white/5">
           <div>
-            <p className="text-xs text-zinc-500">Still owed to me (all time)</p>
+            <p className="text-xs text-zinc-500">المتبقي لي عند الناس (الكل)</p>
             <p className="tabular text-lg font-bold text-emerald-600 dark:text-emerald-400">{money(totals.owedToMe)}</p>
           </div>
           <div>
-            <p className="text-xs text-zinc-500">I still owe (all time)</p>
+            <p className="text-xs text-zinc-500">المتبقي علي للناس (الكل)</p>
             <p className="tabular text-lg font-bold text-amber-600 dark:text-amber-400">{money(totals.iOwe)}</p>
           </div>
         </div>
         {openPeople.length > 0 && (
           <table className="mt-4 w-full text-sm">
             <thead>
-              <tr className="text-left text-xs text-zinc-500">
-                <th className="pb-2 font-medium">Person</th>
-                <th className="pb-2 text-right font-medium">Owes me</th>
-                <th className="pb-2 text-right font-medium">I owe</th>
+              <tr className="text-start text-xs text-zinc-500">
+                <th className="pb-2 font-medium">الشخص</th>
+                <th className="pb-2 text-end font-medium">لي عنده</th>
+                <th className="pb-2 text-end font-medium">علي له</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-black/5 dark:divide-white/5">
@@ -147,8 +147,8 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
                   <td className="py-2 font-medium">
                     <Link href={`/debts/${encodeURIComponent(p.key)}`}>{p.person}</Link>
                   </td>
-                  <td className="tabular py-2 text-right">{p.owedToMe ? money(p.owedToMe) : "—"}</td>
-                  <td className="tabular py-2 text-right">{p.iOwe ? money(p.iOwe) : "—"}</td>
+                  <td className="tabular py-2 text-end">{p.owedToMe ? money(p.owedToMe) : "—"}</td>
+                  <td className="tabular py-2 text-end">{p.iOwe ? money(p.iOwe) : "—"}</td>
                 </tr>
               ))}
             </tbody>
@@ -163,7 +163,7 @@ function Stat({ label, value, tone }: { label: string; value: string; tone?: str
   return (
     <div className="card p-4">
       <p className="text-xs font-medium text-zinc-500">{label}</p>
-      <p className={clsx("tabular mt-1 truncate text-xl font-bold tracking-tight", tone)}>{value}</p>
+      <p className={clsx("tabular mt-1 truncate text-xl font-bold", tone)}>{value}</p>
     </div>
   );
 }

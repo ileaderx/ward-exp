@@ -3,7 +3,7 @@ import { expenseCategories, expenseStats, listExpenses } from "@/lib/data";
 import { monthEnd, todayISO } from "@/lib/dates";
 import { ExpensesClient } from "./ExpensesClient";
 
-export const metadata: Metadata = { title: "Expenses" };
+export const metadata: Metadata = { title: "المصاريف" };
 
 export default async function ExpensesPage({ searchParams }: PageProps<"/expenses">) {
   const sp = await searchParams;

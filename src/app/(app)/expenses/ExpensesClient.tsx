@@ -43,16 +43,16 @@ export function ExpensesClient({ expenses, today, month, monthTotal, byCategory,
 
   return (
     <div className="space-y-4 pb-4">
-      <PageHeader title="Expenses" subtitle="Daily spending" action={<AddButton onClick={() => setEditing("new")} label="Add expense" />} />
+      <PageHeader title="المصاريف" subtitle="مصاريفك اليومية" action={<AddButton onClick={() => setEditing("new")} label="إضافة مصروف" />} />
 
       <MonthSwitcher month={month} current={today} hrefFor={(m) => params({ month: m })} />
 
       <div className="card overflow-hidden">
         <div className="bg-gradient-to-br from-rose-500 to-pink-600 p-5 text-white">
-          <p className="text-sm font-medium text-white/80">{q || category ? "Filtered total" : "Spent this month"}</p>
-          <p className="tabular mt-1 text-4xl font-bold tracking-tight">{money(q || category ? filteredTotal : monthTotal)}</p>
+          <p className="text-sm font-medium text-white/80">{q || category ? "مجموع النتائج" : "مصاريف هذا الشهر"}</p>
+          <p className="tabular mt-1 text-4xl font-bold">{money(q || category ? filteredTotal : monthTotal)}</p>
           <p className="mt-1 text-sm text-white/80">
-            {expenses.length} expense{expenses.length === 1 ? "" : "s"}
+            {expenses.length} {expenses.length === 1 ? "مصروف" : "مصاريف"}
           </p>
         </div>
         {byCategory.length > 0 && (
@@ -61,7 +61,7 @@ export function ExpensesClient({ expenses, today, month, monthTotal, byCategory,
               href={params({ category: "" })}
               className={clsx("shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold", !category ? "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900" : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300")}
             >
-              All
+              الكل
             </Link>
             {byCategory.map((c) => (
               <Link
@@ -82,17 +82,17 @@ export function ExpensesClient({ expenses, today, month, monthTotal, byCategory,
       <form action="/expenses" className="relative">
         <input type="hidden" name="month" value={month.slice(0, 7)} />
         {category && <input type="hidden" name="category" value={category} />}
-        <Search className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-zinc-400" />
-        <input name="q" defaultValue={q} key={q} placeholder="Search notes…" className="field bg-white pr-12 pl-12 ring-black/5 dark:bg-zinc-900" enterKeyHint="search" />
+        <Search className="pointer-events-none absolute top-1/2 start-4 size-5 -translate-y-1/2 text-zinc-400" />
+        <input name="q" defaultValue={q} key={q} placeholder="ابحث في الملاحظات…" className="field bg-white pe-12 ps-12 ring-black/5 dark:bg-zinc-900" enterKeyHint="search" />
         {q && (
-          <Link href={params({ q: "" })} className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1.5 text-zinc-400" aria-label="Clear search">
+          <Link href={params({ q: "" })} className="absolute top-1/2 end-3 -translate-y-1/2 rounded-full p-1.5 text-zinc-400" aria-label="مسح البحث">
             <X className="size-4" />
           </Link>
         )}
       </form>
 
       {expenses.length === 0 ? (
-        <EmptyState emoji="🧾" title={q || category ? "No matching expenses" : "No expenses yet"} text={q || category ? "Try another search or category." : "Tap + to add your first expense for this month."} />
+        <EmptyState emoji="🧾" title={q || category ? "لا توجد نتائج" : "لا توجد مصاريف بعد"} text={q || category ? "جرّب بحثاً أو فئة أخرى." : "اضغط + لإضافة أول مصروف لهذا الشهر."} />
       ) : (
         [...days.entries()].map(([day, items]) => (
           <section key={day}>
@@ -109,7 +109,7 @@ export function ExpensesClient({ expenses, today, month, monthTotal, byCategory,
         ))
       )}
 
-      <Sheet open={editing !== null} onClose={close} title={editing === "new" ? "New expense" : "Edit expense"}>
+      <Sheet open={editing !== null} onClose={close} title={editing === "new" ? "مصروف جديد" : "تعديل المصروف"}>
         {editing !== null && (
           <ExpenseForm
             key={editing === "new" ? "new" : editing.id}

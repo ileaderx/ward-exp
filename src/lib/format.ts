@@ -1,7 +1,10 @@
 export const CURRENCY = process.env.NEXT_PUBLIC_CURRENCY || "KWD";
 
-const formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: CURRENCY });
-const compact = new Intl.NumberFormat("en-US", { style: "currency", currency: CURRENCY, notation: "compact", maximumFractionDigits: 1 });
+// Arabic labels (د.ك) with Western digits, which read better for amounts.
+export const LOCALE = "ar-KW-u-nu-latn";
+
+const formatter = new Intl.NumberFormat(LOCALE, { style: "currency", currency: CURRENCY });
+const compact = new Intl.NumberFormat(LOCALE, { style: "currency", currency: CURRENCY, notation: "compact", maximumFractionDigits: 1 });
 
 export function money(value: number) {
   return formatter.format(value);

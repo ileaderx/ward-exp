@@ -1,3 +1,5 @@
+import { LOCALE } from "@/lib/format";
+
 // Dates are stored as UTC midnight of the calendar day the user picked, so a
 // "YYYY-MM-DD" string round-trips without time-zone drift.
 
@@ -44,15 +46,15 @@ export function isISODay(value: unknown): value is string {
 }
 
 export function formatDay(iso: string, opts: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" }) {
-  return new Intl.DateTimeFormat("en-GB", { ...opts, timeZone: "UTC" }).format(parseDay(iso));
+  return new Intl.DateTimeFormat(LOCALE, { ...opts, timeZone: "UTC" }).format(parseDay(iso));
 }
 
 export function formatMonth(iso: string) {
-  return new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }).format(parseDay(iso));
+  return new Intl.DateTimeFormat(LOCALE, { month: "long", year: "numeric", timeZone: "UTC" }).format(parseDay(iso));
 }
 
 export function relativeDayLabel(iso: string, today = todayISO()) {
-  if (iso === today) return "Today";
-  if (iso === addDays(today, -1)) return "Yesterday";
+  if (iso === today) return "اليوم";
+  if (iso === addDays(today, -1)) return "أمس";
   return formatDay(iso, { weekday: "short", day: "numeric", month: "short", year: iso.slice(0, 4) === today.slice(0, 4) ? undefined : "numeric" });
 }

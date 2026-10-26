@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
+const font = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: { default: "Ward Expenses", template: "%s · Ward Expenses" },
-  description: "Track daily expenses and debts, with simple reports.",
-  appleWebApp: { capable: true, title: "Expenses", statusBarStyle: "default" },
+  title: { default: "مصاريفي", template: "%s · مصاريفي" },
+  description: "تابع مصاريفك اليومية وديونك مع تقارير بسيطة.",
+  appleWebApp: { capable: true, title: "مصاريفي", statusBarStyle: "default" },
   formatDetection: { telephone: false },
 };
 
@@ -20,7 +28,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="ar" dir="rtl" className={font.variable}>
       <body className="min-h-dvh font-sans text-zinc-900 antialiased dark:text-zinc-100">{children}</body>
     </html>
   );

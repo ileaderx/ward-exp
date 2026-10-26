@@ -20,7 +20,7 @@ export function useSubmit() {
           toast(res.error, "error");
         }
       } catch {
-        toast("Connection problem. Please try again.", "error");
+        toast("مشكلة في الاتصال، حاول مرة ثانية.", "error");
       }
     });
   }

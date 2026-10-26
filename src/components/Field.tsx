@@ -20,7 +20,7 @@ export function AmountInput({ defaultValue, autoFocus, max }: { defaultValue?: n
       autoFocus={autoFocus}
       defaultValue={defaultValue}
       placeholder="0.000"
-      className="field tabular py-4 text-center !text-3xl font-bold tracking-tight"
+      className="field tabular py-4 text-center !text-3xl font-bold"
     />
   );
 }

@@ -29,7 +29,7 @@ export function ExpenseForm({
     <form
       action={(fd) => {
         if (!category.trim()) {
-          run(async () => ({ ok: false, error: "Pick a category" }));
+          run(async () => ({ ok: false, error: "اختر الفئة" }));
           return;
         }
         fd.set("category", category.trim());
@@ -41,7 +41,7 @@ export function ExpenseForm({
       <AmountInput defaultValue={expense?.amount} autoFocus={!expense} />
 
       <div>
-        <Label>Category</Label>
+        <Label>الفئة</Label>
         <div className="grid grid-cols-4 gap-2">
           {EXPENSE_CATEGORIES.map((c) => (
             <button
@@ -80,7 +80,7 @@ export function ExpenseForm({
         <input
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="…or type your own category"
+          placeholder="أو اكتب فئة جديدة…"
           maxLength={40}
           className="field mt-2 py-2.5"
         />
@@ -88,12 +88,12 @@ export function ExpenseForm({
 
       <div className="grid grid-cols-2 gap-3">
         <label className="col-span-2 block sm:col-span-1">
-          <Label>Date</Label>
+          <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={expense?.date ?? today} max="2100-12-31" className="field" />
         </label>
         <label className="col-span-2 block sm:col-span-1">
-          <Label hint="optional">Note</Label>
-          <input name="note" defaultValue={expense?.note} maxLength={200} placeholder="e.g. Lunch with team" className="field" />
+          <Label hint="اختياري">ملاحظة</Label>
+          <input name="note" defaultValue={expense?.note} maxLength={200} placeholder="مثلاً: غداء مع الأصدقاء" className="field" />
         </label>
       </div>
 
@@ -102,16 +102,16 @@ export function ExpenseForm({
           <button
             type="button"
             disabled={pending}
-            onClick={() => confirm("Delete this expense?") && run(() => deleteExpense(expense.id), onDone)}
+            onClick={() => confirm("حذف هذا المصروف؟") && run(() => deleteExpense(expense.id), onDone)}
             className="btn bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400"
-            aria-label="Delete expense"
+            aria-label="حذف المصروف"
           >
             <Trash2 className="size-5" />
           </button>
         )}
         <button type="submit" disabled={pending} className="btn-primary flex-1 py-3.5 text-base">
           {pending && <Loader2 className="size-5 animate-spin" />}
-          {expense ? "Save changes" : "Add expense"}
+          {expense ? "حفظ التعديلات" : "إضافة المصروف"}
         </button>
       </div>
     </form>

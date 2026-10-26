@@ -8,21 +8,21 @@ import { logout } from "@/lib/actions";
 import { AppIconArt } from "@/components/AppIcon";
 
 const LINKS = [
-  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
-  { href: "/expenses", label: "Expenses", icon: Wallet },
-  { href: "/debts", label: "Debts", icon: HandCoins },
-  { href: "/reports", label: "Reports", icon: BarChart3 },
+  { href: "/dashboard", label: "الرئيسية", icon: LayoutDashboard },
+  { href: "/expenses", label: "المصاريف", icon: Wallet },
+  { href: "/debts", label: "الديون", icon: HandCoins },
+  { href: "/reports", label: "التقارير", icon: BarChart3 },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="no-print fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-black/5 bg-white/70 px-4 py-6 backdrop-blur md:flex dark:border-white/10 dark:bg-zinc-950/70">
+    <aside className="no-print fixed inset-y-0 start-0 hidden w-64 flex-col border-e border-black/5 bg-white/70 px-4 py-6 backdrop-blur md:flex dark:border-white/10 dark:bg-zinc-950/70">
       <div className="mb-8 flex items-center gap-3 px-2">
         <div className="size-9 overflow-hidden rounded-xl">
           <AppIconArt size={36} rounded />
         </div>
-        <span className="text-lg font-bold tracking-tight">Ward Expenses</span>
+        <span className="text-lg font-bold">مصاريفي</span>
       </div>
       <nav className="flex flex-1 flex-col gap-1">
         {LINKS.map(({ href, label, icon: Icon }) => {
@@ -39,7 +39,7 @@ export function Sidebar() {
               )}
             >
               <Icon className="size-5" />
-              {label === "Home" ? "Dashboard" : label}
+              {label === "الرئيسية" ? "لوحة التحكم" : label}
             </Link>
           );
         })}
@@ -47,7 +47,7 @@ export function Sidebar() {
       <form action={logout}>
         <button className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900">
           <LogOut className="size-5" />
-          Sign out
+          تسجيل الخروج
         </button>
       </form>
     </aside>
