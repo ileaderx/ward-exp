@@ -6,7 +6,7 @@ export type DebtDirection = (typeof DEBT_DIRECTIONS)[number];
 
 const PaymentSchema = new Schema(
   {
-    amount: { type: Number, required: true, min: 0.01 },
+    amount: { type: Number, required: true, min: 0.001 },
     date: { type: Date, required: true },
     note: { type: String, trim: true, maxlength: 200, default: "" },
   },
@@ -19,7 +19,7 @@ const DebtSchema = new Schema(
     // See personKey() in lib/people.ts
     personKey: { type: String, required: true, index: true },
     direction: { type: String, enum: DEBT_DIRECTIONS, required: true },
-    amount: { type: Number, required: true, min: 0.01 },
+    amount: { type: Number, required: true, min: 0.001 },
     paid: { type: Number, required: true, default: 0, min: 0 },
     payments: { type: [PaymentSchema], default: [] },
     note: { type: String, trim: true, maxlength: 200, default: "" },

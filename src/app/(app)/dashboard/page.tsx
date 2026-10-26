@@ -3,7 +3,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { ArrowDownLeft, ArrowUpRight, CalendarClock, ChevronRight, TrendingDown, TrendingUp } from "lucide-react";
 import { debtTotals, expenseCategories, expenseStats, listExpenses, personNames, upcomingDebts } from "@/lib/data";
-import { addDays, addMonths, formatDay, monthEnd, monthStart, relativeDayLabel, todayISO } from "@/lib/dates";
+import { TIME_ZONE, addDays, addMonths, formatDay, monthEnd, monthStart, relativeDayLabel, todayISO } from "@/lib/dates";
 import { money } from "@/lib/format";
 import { PageHeader } from "@/components/PageHeader";
 import { CategoryBars, ColumnChart } from "@/components/Charts";
@@ -13,7 +13,7 @@ import { QuickActions } from "./QuickActions";
 export const metadata: Metadata = { title: "Dashboard" };
 
 function greeting() {
-  const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: process.env.APP_TIMEZONE || "UTC" }).format(new Date()));
+  const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: TIME_ZONE }).format(new Date()));
   return hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 }
 

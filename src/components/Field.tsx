@@ -13,13 +13,13 @@ export function AmountInput({ defaultValue, autoFocus, max }: { defaultValue?: n
       name="amount"
       type="number"
       inputMode="decimal"
-      step="0.01"
-      min="0.01"
+      step="0.001"
+      min="0.001"
       max={max}
       required
       autoFocus={autoFocus}
       defaultValue={defaultValue}
-      placeholder="0.00"
+      placeholder="0.000"
       className="field tabular py-4 text-center !text-3xl font-bold tracking-tight"
     />
   );

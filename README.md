@@ -32,8 +32,8 @@ MONGODB_URI="mongodb+srv://..."
 AUTH_SECRET="<long random string>"   # node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ADMIN_EMAIL="you@example.com"
 ADMIN_PASSWORD="your-password"
-NEXT_PUBLIC_CURRENCY="USD"           # SAR, AED, IQD, EUR, ...
-APP_TIMEZONE="Asia/Riyadh"           # used for "today" and "this month"
+NEXT_PUBLIC_CURRENCY="KWD"           # optional, defaults to KWD
+APP_TIMEZONE="Asia/Kuwait"           # optional, defaults to Asia/Kuwait
 ```
 
 The login email and password live only in these variables. They are never committed to the repository.

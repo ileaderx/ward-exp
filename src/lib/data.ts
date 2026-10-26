@@ -1,7 +1,7 @@
 import "server-only";
 import { connectDB } from "@/lib/mongodb";
 import { parseDay, toISODay } from "@/lib/dates";
-import { round2 } from "@/lib/format";
+import { roundMoney } from "@/lib/format";
 import Expense, { type ExpenseDoc } from "@/models/Expense";
 import Debt, { type DebtDoc } from "@/models/Debt";
 import type { DebtItem, ExpenseItem, PersonSummary } from "@/lib/types";
@@ -34,7 +34,7 @@ export function toDebtItem(doc: DebtDoc): DebtItem {
     direction: doc.direction,
     amount: doc.amount,
     paid: doc.paid,
-    remaining: round2(doc.amount - doc.paid),
+    remaining: roundMoney(doc.amount - doc.paid),
     note: doc.note ?? "",
     date: toISODay(doc.date),
     dueDate: doc.dueDate ? toISODay(doc.dueDate) : null,
@@ -84,11 +84,11 @@ export async function expenseStats(from: string, to: string) {
     },
   ]);
   return {
-    total: round2(result.total[0]?.sum ?? 0),
+    total: roundMoney(result.total[0]?.sum ?? 0),
     count: result.total[0]?.count ?? 0,
-    byCategory: result.byCategory.map((c) => ({ category: c._id, total: round2(c.sum), count: c.count })),
-    byDay: result.byDay.map((d) => ({ day: d._id, total: round2(d.sum) })),
-    byMonth: result.byMonth.map((m) => ({ month: m._id, total: round2(m.sum) })),
+    byCategory: result.byCategory.map((c) => ({ category: c._id, total: roundMoney(c.sum), count: c.count })),
+    byDay: result.byDay.map((d) => ({ day: d._id, total: roundMoney(d.sum) })),
+    byMonth: result.byMonth.map((m) => ({ month: m._id, total: roundMoney(m.sum) })),
   };
 }
 
@@ -138,9 +138,9 @@ export async function peopleSummary(): Promise<PersonSummary[]> {
     .map((r) => ({
       key: r._id,
       person: r.person,
-      owedToMe: round2(r.owedToMe),
-      iOwe: round2(r.iOwe),
-      net: round2(r.owedToMe - r.iOwe),
+      owedToMe: roundMoney(r.owedToMe),
+      iOwe: roundMoney(r.iOwe),
+      net: roundMoney(r.owedToMe - r.iOwe),
       openCount: r.openCount,
       totalCount: r.totalCount,
       lastDate: toISODay(r.lastDate),
@@ -156,9 +156,9 @@ export async function debtTotals() {
   ]);
   const find = (dir: string) => rows.find((r) => r._id === dir);
   return {
-    owedToMe: round2(find("owed_to_me")?.remaining ?? 0),
+    owedToMe: roundMoney(find("owed_to_me")?.remaining ?? 0),
     owedToMeCount: find("owed_to_me")?.count ?? 0,
-    iOwe: round2(find("i_owe")?.remaining ?? 0),
+    iOwe: roundMoney(find("i_owe")?.remaining ?? 0),
     iOweCount: find("i_owe")?.count ?? 0,
   };
 }
@@ -177,7 +177,7 @@ export async function debtActivity(from: string, to: string) {
       { $group: { _id: "$direction", sum: { $sum: "$payments.amount" } } },
     ]),
   ]);
-  const pick = (rows: { _id: string; sum: number }[], dir: string) => round2(rows.find((r) => r._id === dir)?.sum ?? 0);
+  const pick = (rows: { _id: string; sum: number }[], dir: string) => roundMoney(rows.find((r) => r._id === dir)?.sum ?? 0);
   return {
     lent: pick(created, "owed_to_me"),
     borrowed: pick(created, "i_owe"),

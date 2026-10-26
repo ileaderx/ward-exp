@@ -1,7 +1,7 @@
 // Dates are stored as UTC midnight of the calendar day the user picked, so a
 // "YYYY-MM-DD" string round-trips without time-zone drift.
 
-export const TIME_ZONE = process.env.APP_TIMEZONE || "UTC";
+export const TIME_ZONE = process.env.APP_TIMEZONE || "Asia/Kuwait";
 
 export function todayISO(timeZone = TIME_ZONE) {
   // en-CA formats as YYYY-MM-DD

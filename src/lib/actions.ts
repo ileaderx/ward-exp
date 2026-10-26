@@ -9,7 +9,7 @@ import { z } from "zod";
 import { requireSession } from "@/lib/auth";
 import { connectDB } from "@/lib/mongodb";
 import { isISODay, parseDay } from "@/lib/dates";
-import { round2 } from "@/lib/format";
+import { roundMoney } from "@/lib/format";
 import { SESSION_COOKIE, SESSION_MAX_AGE, signSession } from "@/lib/session";
 import type { ActionResult } from "@/lib/types";
 import Expense from "@/models/Expense";
@@ -67,7 +67,7 @@ const amountField = z.coerce
   .number({ error: "Enter an amount" })
   .refine((n) => Number.isFinite(n) && n > 0, "Amount must be more than 0")
   .refine((n) => n < 1e12, "Amount is too large")
-  .transform(round2);
+  .transform(roundMoney);
 
 const dayField = z.string().refine(isISODay, "Pick a valid date");
 const noteField = z.string().trim().max(200, "Note is too long").default("");
@@ -163,7 +163,7 @@ export async function saveDebt(formData: FormData): Promise<ActionResult> {
         return { ok: false, error: `Amount can't be less than what was already paid (${debt.paid})` };
       }
       debt.set(values);
-      debt.settled = round2(debt.amount - debt.paid) <= 0;
+      debt.settled = roundMoney(debt.amount - debt.paid) <= 0;
       await debt.save();
     } else {
       await Debt.create(values);
@@ -197,13 +197,13 @@ export async function addPayment(formData: FormData): Promise<ActionResult> {
 
     const debt = await Debt.findById(debtId);
     if (!debt) return { ok: false, error: "Debt not found" };
-    const remaining = round2(debt.amount - debt.paid);
+    const remaining = roundMoney(debt.amount - debt.paid);
     if (remaining <= 0) return { ok: false, error: "This debt is already fully paid" };
     if (amount > remaining) return { ok: false, error: `Payment is more than what's left (${remaining})` };
 
     debt.payments.push({ amount, date: parseDay(date), note });
-    debt.paid = round2(debt.paid + amount);
-    debt.settled = round2(debt.amount - debt.paid) <= 0;
+    debt.paid = roundMoney(debt.paid + amount);
+    debt.settled = roundMoney(debt.amount - debt.paid) <= 0;
     await debt.save();
     refreshAll();
     return { ok: true, message: debt.settled ? "Fully paid 🎉" : "Payment recorded" };
@@ -216,9 +216,9 @@ export async function deletePayment(debtId: string, paymentId: string): Promise<
     const debt = await Debt.findById(debtId);
     const payment = debt?.payments.id(paymentId);
     if (!debt || !payment) return { ok: false, error: "Payment not found" };
-    debt.paid = round2(Math.max(0, debt.paid - payment.amount));
+    debt.paid = roundMoney(Math.max(0, debt.paid - payment.amount));
     payment.deleteOne();
-    debt.settled = round2(debt.amount - debt.paid) <= 0;
+    debt.settled = roundMoney(debt.amount - debt.paid) <= 0;
     await debt.save();
     refreshAll();
     return { ok: true, message: "Payment removed" };

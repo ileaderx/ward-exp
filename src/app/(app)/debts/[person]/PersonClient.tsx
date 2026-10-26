@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { ArrowDownLeft, ArrowUpRight, CalendarClock, CheckCircle2, ChevronLeft, HandCoins, Pencil, Plus, X } from "lucide-react";
 import { deletePayment } from "@/lib/actions";
 import { formatDay } from "@/lib/dates";
-import { money, round2 } from "@/lib/format";
+import { money, roundMoney } from "@/lib/format";
 import { personKey } from "@/lib/people";
 import type { DebtItem } from "@/lib/types";
 import { Avatar } from "@/components/Avatar";
@@ -25,9 +25,9 @@ export function PersonClient({ debts, people, today }: { debts: DebtItem[]; peop
   const { pending, run } = useSubmit();
 
   const name = debts[0].person;
-  const owedToMe = round2(debts.filter((d) => d.direction === "owed_to_me").reduce((s, d) => s + d.remaining, 0));
-  const iOwe = round2(debts.filter((d) => d.direction === "i_owe").reduce((s, d) => s + d.remaining, 0));
-  const net = round2(owedToMe - iOwe);
+  const owedToMe = roundMoney(debts.filter((d) => d.direction === "owed_to_me").reduce((s, d) => s + d.remaining, 0));
+  const iOwe = roundMoney(debts.filter((d) => d.direction === "i_owe").reduce((s, d) => s + d.remaining, 0));
+  const net = roundMoney(owedToMe - iOwe);
 
   return (
     <div className="space-y-4 pt-4 pb-4 md:pt-8">
