@@ -70,11 +70,11 @@ export default async function ReportsPage({ searchParams }: PageProps<"/reports"
       </div>
 
       <form action="/reports" className="no-print card flex flex-wrap items-end gap-3 p-4">
-        <label className="min-w-[8rem] flex-1">
+        <label className="min-w-0 flex-1 basis-32">
           <span className="mb-1 block text-xs font-medium text-zinc-500">من</span>
           <input type="date" name="from" defaultValue={from} required className="field py-2.5" />
         </label>
-        <label className="min-w-[8rem] flex-1">
+        <label className="min-w-0 flex-1 basis-32">
           <span className="mb-1 block text-xs font-medium text-zinc-500">إلى</span>
           <input type="date" name="to" defaultValue={to} required className="field py-2.5" />
         </label>

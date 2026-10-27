@@ -68,6 +68,20 @@ input[type="date"] {
   text-align: end;
 }
 
+/* iOS gives date inputs a fixed native width and height that ignore the
+   layout; drop the native look so they fit their column like other fields. */
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 3rem;
+}
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: end;
+  margin: 0;
+}
+
 @utility card {
   @apply rounded-2xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04),0_1px_3px_rgba(16,24,40,0.06)] ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/10;
 }

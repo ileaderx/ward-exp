@@ -34,11 +34,11 @@ export function PaymentForm({ debt, today, onDone }: { debt: DebtItem; today: st
         </button>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        <label className="block">
+        <label className="block min-w-0">
           <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={today} className="field" />
         </label>
-        <label className="block">
+        <label className="block min-w-0">
           <Label hint="اختياري">ملاحظة</Label>
           <input name="note" maxLength={200} placeholder="كاش، تحويل…" className="field" />
         </label>

@@ -62,7 +62,7 @@ export function DebtForm({
         ))}
       </div>
 
-      <label className="block">
+      <label className="block min-w-0">
         <Label>اسم الشخص</Label>
         <input
           name="person"
@@ -98,17 +98,17 @@ export function DebtForm({
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <label className="block">
+        <label className="block min-w-0">
           <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={debt?.date ?? today} className="field" />
         </label>
-        <label className="block">
+        <label className="block min-w-0">
           <Label hint="اختياري">تاريخ السداد</Label>
           <input name="dueDate" type="date" defaultValue={debt?.dueDate ?? ""} className="field" />
         </label>
       </div>
 
-      <label className="block">
+      <label className="block min-w-0">
         <Label hint="اختياري">ملاحظة</Label>
         <input name="note" defaultValue={debt?.note} maxLength={200} placeholder="مثلاً: سلفة لتصليح السيارة" className="field" />
       </label>

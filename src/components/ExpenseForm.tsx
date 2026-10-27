@@ -87,11 +87,11 @@ export function ExpenseForm({
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <label className="col-span-2 block sm:col-span-1">
+        <label className="col-span-2 block min-w-0 sm:col-span-1">
           <Label>التاريخ</Label>
           <input name="date" type="date" required defaultValue={expense?.date ?? today} max="2100-12-31" className="field" />
         </label>
-        <label className="col-span-2 block sm:col-span-1">
+        <label className="col-span-2 block min-w-0 sm:col-span-1">
           <Label hint="اختياري">ملاحظة</Label>
           <input name="note" defaultValue={expense?.note} maxLength={200} placeholder="مثلاً: غداء مع الأصدقاء" className="field" />
         </label>
